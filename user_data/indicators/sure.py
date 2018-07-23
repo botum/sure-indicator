@@ -117,14 +117,14 @@ def get_sure_OHLC(self, df: pd.DataFrame, intervals: list, n: int=2,
     #     print('dataframe too short: ', len(df))
     #     samples = len(df) * 0.1
 
-    su = get_cluster(df, ['high', 'low'], quantile, samples)
+    su = get_cluster(df, ['low'], quantile, samples)
     su_gap = [su[0]]
     for i in range(1, len(su)):
         if su[i] <= (su_gap[-1] * (1 + down_thresh)):
             su_gap.append(su[i])
     su = np.array(su_gap)
 
-    re = sorted(get_cluster(df, ['high', 'low'], quantile, samples), reverse=True)
+    re = sorted(get_cluster(df, ['high'], quantile, samples), reverse=True)
     re_gap = [re[0]]
     for i in range(1, len(re)):
         if re[i] <= (re_gap[-1] * (1 - up_thresh)):
